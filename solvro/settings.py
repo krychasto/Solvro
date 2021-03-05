@@ -24,7 +24,7 @@ TEMPLATES_DIR = BASE_DIR / 'templates'
 SECRET_KEY = 'ixz3+7@yh9m2k75a*h!(^+utn60e(1)l^_%vwh+r443=-%21)q'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
