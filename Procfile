@@ -1,1 +1,1 @@
-    web: gunicorn solvro.wsgi
+    web: gunicorn solvro.wsgi --log-file -
