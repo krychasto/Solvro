@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Solvro</title>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="{% static "css/style.css" %}">
+
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+</head>
+<body onload="getListElements()">
+	<nav>
+        <div class="nav-wrapper">
+            <a href="homepage" class="brand-logo">JakDojade!</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li>Hello, {{request.user}}</li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+        </div>
+        <span>Hello, </span>
+        <span><a href="{% url 'logout' %}">Logout</a></span>
+    </nav>
+	<div class="container">
+		{% block content %}{% endblock content %}
+	</div>
+
+</body>
+</html>
