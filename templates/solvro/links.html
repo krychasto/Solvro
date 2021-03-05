@@ -1,0 +1,11 @@
+<h2>Links</h2>
+
+{% for link in link_items %}
+<p><h2>Z {{link.source}} Do {{link.target}} jest {{link.distance}} kilometrow</h2></p>
+
+{% endfor %}
+
+{% for stop in stop_items %}
+    <p>{{stop.stop_id}}
+        {{stop.stop_name}}</p>
+{% endfor %}

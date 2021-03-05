@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['solvrotestapp.herokuapp.com','127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    'links',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

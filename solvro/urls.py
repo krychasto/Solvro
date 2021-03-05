@@ -23,4 +23,5 @@ urlpatterns = [
     path('logout/', views.logoutUser, name='logout'),
     path('', views.home, name='homepage'),
     path('admin/', admin.site.urls),
+    path('create-database/', views.create_database),
 ]

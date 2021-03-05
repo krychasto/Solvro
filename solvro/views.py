@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
 from .forms import CreateUserForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 import json
+from links.models import Stops, Links
+
 
 def registerPage(request):
     if request.user.is_authenticated:
@@ -50,6 +51,23 @@ def logoutUser(request):
 
 @login_required(login_url='login')
 def home(request):
-
     context = {}
     return render(request, 'solvro/homepage.html', context)
+
+def create_database(request):
+    Stops.objects.all().delete()
+    Links.objects.all().delete()
+    with open('solvro_city.json') as f:
+        data = json.load(f)
+    for stop in data['nodes']:
+        created_stop_obj = Stops.objects.create(stop_id=stop['id'], stop_name=stop['stop_name'])
+    stop_items = Stops.objects.all()
+
+    for link in data['links']:
+        created_link_obj = Links.objects.create(distance=link['distance'], source=link['source'], target=link['target'])
+    link_items = Links.objects.all()
+    context = {
+        'stop_items': stop_items,
+        'link_items': link_items,
+    }
+    return render(request, 'solvro/links.html', context)
