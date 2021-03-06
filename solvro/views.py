@@ -66,7 +66,7 @@ def create_database(request):
             'name': created_stop_obj.stop_name,
         }
         list_of_stops.append(stop_obj)
-    print(list_of_stops) # Returns list of stops in Solvro City.
+    # print(list_of_stops) # Returns list of stops in Solvro City.
 
     #stop_items = Stops.objects.all()
 
@@ -77,8 +77,29 @@ def create_database(request):
        # 'stop_items': stop_items,
         'link_items': link_items,
     }
-
+    find_best_path(1, 15, link_items)
 
     return render(request, 'solvro/links.html', context)
 
 
+def find_best_path(stop1, stop2, link_items):
+    # Find best link
+    stop1_name = Stops.objects.get(stop_id=stop1).stop_name
+    stop2_name = Stops.objects.get(stop_id=stop2).stop_name
+    stop1_obj = {
+        "name": stop1_name,
+    }
+    stop2_obj = {
+        "name": stop2_name,
+    }
+    stops = [stop1_obj, stop2_obj]
+    print(stops)
+    for link in link_items:
+        print(link.source)
+        if link.source == stop1_name and link.target == stop2_name:
+            object_of_stops_in_path = {
+                "stops": stops,
+                "distance": link.distance,
+            }
+
+    print(object_of_stops_in_path)
