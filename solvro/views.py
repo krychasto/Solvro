@@ -64,7 +64,7 @@ def create_database(request):
     stop_items = Stops.objects.all()
 
     for link in data['links']:
-        created_link_obj = Links.objects.create(distance=link['distance'], source=link['source'], target=link['target'])
+        created_link_obj = Links.objects.create(distance=link['distance'], source=Stops.objects.get(stop_id=link['source']).stop_name, target=Stops.objects.get(stop_id=link['target']).stop_name)
     link_items = Links.objects.all()
     context = {
         'stop_items': stop_items,
