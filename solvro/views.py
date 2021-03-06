@@ -57,17 +57,28 @@ def home(request):
 def create_database(request):
     Stops.objects.all().delete()
     Links.objects.all().delete()
+    list_of_stops = []
     with open('solvro_city.json') as f:
         data = json.load(f)
     for stop in data['nodes']:
         created_stop_obj = Stops.objects.create(stop_id=stop['id'], stop_name=stop['stop_name'])
-    stop_items = Stops.objects.all()
+        stop_obj = {
+            'name': created_stop_obj.stop_name,
+        }
+        list_of_stops.append(stop_obj)
+    print(list_of_stops) # Returns list of stops in Solvro City.
+
+    #stop_items = Stops.objects.all()
 
     for link in data['links']:
         created_link_obj = Links.objects.create(distance=link['distance'], source=Stops.objects.get(stop_id=link['source']).stop_name, target=Stops.objects.get(stop_id=link['target']).stop_name)
     link_items = Links.objects.all()
     context = {
-        'stop_items': stop_items,
+       # 'stop_items': stop_items,
         'link_items': link_items,
     }
+
+
     return render(request, 'solvro/links.html', context)
+
+
