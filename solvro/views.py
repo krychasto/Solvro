@@ -77,7 +77,7 @@ def create_database(request):
        # 'stop_items': stop_items,
         'link_items': link_items,
     }
-    dijkatra(making_graph(), 'Przystanek Zasmucony frontend developer', 'Przystanek Przepraszający kabanos')
+    finding_shortest_path(making_graph(),'Przystanek Solvrowy javascriptowiec', 'Przystanek Przepraszający kabanos')
     return render(request, 'solvro/links.html', context)
 
 def making_graph():
@@ -90,6 +90,46 @@ def making_graph():
         graph[stop.stop_name] = b
     return graph
 
-def dijkatra(graph, start, goal):
+def finding_shortest_path(graph, start, goal):
+    shortest_distance = {}
+    predecessor = {}
+    unseenNodes = graph
+    infinity = 99999999
+    path = []
+    for node in unseenNodes:
+        shortest_distance[node] = infinity
+    shortest_distance[start] = 0
+    
+    while unseenNodes:
+        minNode = None
+        for node in unseenNodes:
+            if minNode is None:
+                minNode = node
+            elif shortest_distance[node] < shortest_distance[minNode]:
+                minNode = node
+
+        for childNode, weight in graph[minNode].items():
+            if weight + shortest_distance[minNode] < shortest_distance[childNode]:
+                shortest_distance[childNode] = weight + shortest_distance[minNode]
+                predecessor[childNode] = minNode
+
+        unseenNodes.pop(minNode)
+    
+    currentNode = goal
+    
+    while currentNode != start:
+        try:
+            path.insert(0, currentNode)
+            currentNode = predecessor[currentNode]
+        except KeyError:
+            print('Path not reachable')
+            break
+    path.insert(0, start)
+    if shortest_distance[goal] != infinity:
+        print('Shortest distance is ' + str(shortest_distance[goal]))
+        print('And the path is ' + str(path))
+    
+    print(shortest_distance)
+
 
 
